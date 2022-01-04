@@ -45,16 +45,16 @@ const AppLayout = ({ children }) => {
                 //target _blank 할 땐 반드시 rel='---' 붙여주기(보안문제)
             }
             <Row gutter={8}>
-                <Col xs={24} md={6}>왼쪽</Col>
-                    {isLoggedIn ? <UserProfile /> : <LoginForm setIsLoggedIn={setIsLoggedIn}/>}
-                <Col xs={24} md={12}>회원가입</Col>
+                <Col xs={24} md={6}>
+                    {isLoggedIn ? <UserProfile setIsLoggedIn={setIsLoggedIn} /> : <LoginForm setIsLoggedIn={setIsLoggedIn}/>}
+                </Col>
+                <Col xs={24} md={12}>{children}</Col>
                 <Col xs={24} md={6}>
                     <a href='https://blog.naver.com/jaeeun_98' target='_blank' rel='noreferrer noopener'>
                         Made by Jaeeun
                     </a>
                 </Col>
             </Row>
-            {children}
         </div>
     )
 }
