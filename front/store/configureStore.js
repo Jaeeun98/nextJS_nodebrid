@@ -1,9 +1,17 @@
 import { createWrapper } from 'next-redux-wrapper';
-import { createStore } from 'redux';
-import rootReducer from '../reducers'
+import { applyMiddleware, compose, createStore } from 'redux';
+import rootReducer from '../reducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const configureStore = () => {
-    const store = createStore(rootReducer);
+    //middleware를 사용해야 Redux에서 action이 실행되는 것을 확인할 수 있음
+    //npm i redux-devtools-extension가 있어야 개발자 도구랑 연동됨
+    //배포용일땐 devtool 연결x, 개발용일땐 devtool 연결
+    const middlewares = [];
+    const enhancer = process.env.NODE_ENV === 'production' 
+    ? compose(applyMiddleware(...middlewares)) 
+    : composeWithDevTools(applyMiddleware(...middlewares));
+    const store = createStore(rootReducer, enhancer);
     return store;
 };
 
