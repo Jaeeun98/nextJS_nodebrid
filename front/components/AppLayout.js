@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Input, Menu, Row, Col } from 'antd';
-import { useState } from 'react';
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 import styled from 'styled-components';
+import {useSelector} from 'react-redux';
 
 const SearchInput = styled(Input.Search)`
     vertical-Align:middle;
@@ -13,7 +13,8 @@ const SearchInput = styled(Input.Search)`
 //특정 컴포넌트 공통
 //컴포넌트랑 컨테이너 많이 구분했지만, 지금은 구분하지 않는 경우도 많음
 const AppLayout = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+
     return (
         <div>
             <Menu mode='horizontal'>
@@ -46,7 +47,7 @@ const AppLayout = ({ children }) => {
             }
             <Row gutter={8}>
                 <Col xs={24} md={6}>
-                    {isLoggedIn ? <UserProfile setIsLoggedIn={setIsLoggedIn} /> : <LoginForm setIsLoggedIn={setIsLoggedIn}/>}
+                    {isLoggedIn ? <UserProfile /> : <LoginForm />}
                 </Col>
                 <Col xs={24} md={12}>{children}</Col>
                 <Col xs={24} md={6}>

@@ -2,6 +2,8 @@
 import PropTyes from 'prop-types';
 import 'antd/dist/antd.css'
 import Head from 'next/head';
+import Wrapper from '../store/configureStore';
+//next에서는 provider가 자동으로 적용됨
 
 const App = ({ Component }) => {
     return(
@@ -23,4 +25,4 @@ App.propTypes = {
     Component : PropTyes.elementType.isRequired,
 }
 
-export default App;
+export default Wrapper.withRedux(App);

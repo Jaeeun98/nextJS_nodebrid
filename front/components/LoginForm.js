@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import styled from 'styled-components';
 import useInput from '../hooks/useInput';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../reducers';
 
 const ButtonWrapper = styled.div`
     margin-Top:10px;
@@ -11,14 +13,14 @@ const ButtonWrapper = styled.div`
 const FormWrapper = styled(Form)`
     padding:10px;
 `
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = () => {
+    const dispatch = useDispatch();
     const [id, onChangeId] = useInput('');
     const [password, onChangePassword] = useInput('');
 
     const onSubmitForm = useCallback((e) => {
         //antd에서는 onFinish할 때 e.preventDefault()가 자동으로 적용됨
-        console.log(id, password);
-        setIsLoggedIn(true);
+        dispatch(loginAction(id, password));
     }, [])
 
     //form은 라이브러리를 사용하는게 훨씬 편함
