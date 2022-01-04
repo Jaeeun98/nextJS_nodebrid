@@ -1,7 +1,9 @@
 import { Button, Form, Input } from 'antd';
 import { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import styled from 'styled-components';
+import useInput from '../hooks/useInput';
 
 const ButtonWrapper = styled.div`
     margin-Top:10px;
@@ -10,15 +12,8 @@ const FormWrapper = styled(Form)`
     padding:10px;
 `
 const LoginForm = ({ setIsLoggedIn }) => {
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
-
-    const onChangeId = useCallback((e) => {
-        setId(e.target.value);
-    }, []);
-    const onChangePassword = useCallback((e) => {
-        setPassword(e.target.value);
-    }, [id, password]);
+    const [id, onChangeId] = useInput('');
+    const [password, onChangePassword] = useInput('');
 
     const onSubmitForm = useCallback((e) => {
         //antd에서는 onFinish할 때 e.preventDefault()가 자동으로 적용됨
@@ -60,6 +55,10 @@ const LoginForm = ({ setIsLoggedIn }) => {
             </ButtonWrapper>
         </FormWrapper>
     )
+}
+
+LoginForm.propTypes = {
+    setIsLoggedIn:PropTypes.func.isRequired,
 }
 
 export default LoginForm;
