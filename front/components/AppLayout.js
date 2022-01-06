@@ -3,12 +3,26 @@ import Link from 'next/link';
 import { Input, Menu, Row, Col } from 'antd';
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
-import styled from 'styled-components';
-import {useSelector} from 'react-redux';
+import styled, { createGlobalStyle } from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const SearchInput = styled(Input.Search)`
     vertical-Align:middle;
 `
+const Global = createGlobalStyle`
+  .ant-row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+  
+  .ant-col:first-child {
+      padding-left: 0 !important;
+  }
+  
+  .ant-col:last-child {
+    padding-right: 0 !important;
+  }
+`;
 
 //특정 컴포넌트 공통
 //컴포넌트랑 컨테이너 많이 구분했지만, 지금은 구분하지 않는 경우도 많음
@@ -17,6 +31,7 @@ const AppLayout = ({ children }) => {
 
     return (
         <div>
+            <Global />
             <Menu mode='horizontal'>
                 <Menu.Item>
                     <Link href='/'>

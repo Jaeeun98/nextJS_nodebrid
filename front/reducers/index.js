@@ -1,60 +1,26 @@
 import { HYDRATE } from "next-redux-wrapper"
+import user from './user';
+import post from './post';
+import { combineReducers } from "redux";
 
-//store = store + reducer
-const initialState = {
-    user: {
-        isLoggedIn : false,
-        user : null,
-        signUpData : {},
-        loginData : {}
+//reducer = 함수
+//함수들은 합치기 힘들기때문에 combineReducers를 통해 그 작업을 행함
+//따라서 초기값이 필요하지 않음(combineReducers가 알아서 함)
+//리덕스 서버사이드렌더링을 위해 사용하는 것이 하이드레이트인데
+//이를 사용하려면, index를 넣어줘야함 = 하이드레이트를 위해 인덱스 리듀서를 하나 추가하는 것
+
+const rootReducer = combineReducers({
+    index:(state = {}, action) => {
+        switch(action.type){
+            case HYDRATE:
+                return {...state, ...action.payload};
+            default:
+                return state;
+        }
     },
-    post: {
-        mainPosts:[],
-    }
-}
+    user,
+    post,
+});
 
-//action creator
-export const loginAction = data => {
-    return {
-        type : 'LOG_IN',
-        //객체에서 key와 변수가 같으면 생략 가능
-        data
-    }
-}
-
-export const logoutAction = () => {
-    return {
-        type : 'LOG_OUT',
-    }
-}
-
-//reducer = 이전상태와 액션을 받아서 다음 상태를 만들어내는 함수
-const rootReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case HYDRATE:
-            return {...state, ...action.payload}
-        case 'LOG_IN':
-            return {
-                ...state,
-                user: {
-                    ...state.user,
-                    isLoggedIn: true,
-                    user: action.data
-                }
-            }
-        case 'LOG_OUT':
-            return {
-                ...state,
-                user: {
-                    ...state.user,
-                    isLoggedIn: false,
-                    user: null
-                }
-            }   
-            
-        default:
-            return state;
-    }
-};
 
 export default rootReducer
