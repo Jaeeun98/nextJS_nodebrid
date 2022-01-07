@@ -27,7 +27,7 @@ const Global = createGlobalStyle`
 //특정 컴포넌트 공통
 //컴포넌트랑 컨테이너 많이 구분했지만, 지금은 구분하지 않는 경우도 많음
 const AppLayout = ({ children }) => {
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    const { isLoggedIn } = useSelector(state => state.user);
 
     return (
         <div>

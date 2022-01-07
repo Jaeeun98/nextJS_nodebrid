@@ -4,6 +4,7 @@ import rootReducer from '../reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
+import thunkMiddleware from 'redux-thunk';
 
 const configureStore = () => {
     //middleware를 사용해야 Redux에서 action이 실행되는 것을 확인할 수 있음

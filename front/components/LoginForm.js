@@ -18,20 +18,17 @@ const FormWrapper = styled(Form)`
     padding:10px;
 `
 const LoginForm = () => {
-    const dispatch = useDispatch();
     const [id, onChangeId] = useInput('');
-    const [email, onChangeEmail] = useInput('');
     const [password, onChangePassword] = useInput('');
-    const {isLoggedIn} = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     const onSubmitForm = useCallback(() => {
         //antd에서는 onFinish할 때 e.preventDefault()가 자동으로 적용됨
-        console.log(email, password);
-        dispatch({
-          type: LOG_IN_REQUEST,
-          data: { email, password },
-        });
-      }, [email, password]);
+        dispatch(loginAction({
+            id,
+            password,
+        }));
+    }, [id, password]);
 
     //form은 라이브러리를 사용하는게 훨씬 편함
     return (
@@ -44,12 +41,12 @@ const LoginForm = () => {
             <div>
                 <label htmlFor='user-password'>비밀번호</label>
                 <br />
-                <Input 
-                    name='user-password' 
-                    type={password} 
-                    value={password} 
-                    onChange={onChangePassword} 
-                    required 
+                <Input
+                    name='user-password'
+                    type={password}
+                    value={password}
+                    onChange={onChangePassword}
+                    required
                 />
             </div>
             {
@@ -58,7 +55,7 @@ const LoginForm = () => {
                 //styled-component 사용하기 싫으면 useMemo 사용해서 위에 style을 만든 후 아래에 적용
             }
             <ButtonWrapper>
-                <Button type='primary' htmlType='sumbmit' loading={isLoggedIn}>로그인</Button>
+                <Button type='primary' htmlType='sumbmit' loading={false}>로그인</Button>
                 <Link href='/signup'>
                     <a>
                         <Button>회원가입</Button>
@@ -70,7 +67,7 @@ const LoginForm = () => {
 }
 
 LoginForm.propTypes = {
-    setIsLoggedIn:PropTypes.func.isRequired,
+    setIsLoggedIn: PropTypes.func.isRequired,
 }
 
 export default LoginForm;
